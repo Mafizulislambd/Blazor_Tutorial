@@ -11,10 +11,9 @@ namespace BlazorWASApp.Services
         {
             this.httpClient = httpClient;
         }
-
         public async Task<IEnumerable<Employee>> GetEmployees()
         {
-            return await httpClient.GetFromJsonAsync<IEnumerable<Employee>>("api/employees");
+            return await httpClient.GetFromJsonAsync<IEnumerable<Employee>>("https://localhost:7282/api/Employees");
         }
 
         public Task<Employee> AddEmployee(Employee employee)

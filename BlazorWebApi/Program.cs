@@ -1,3 +1,4 @@
+using BlazorWASApp;
 using BlazorWebApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,16 +15,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-
+//builder.Services.AddScoped(sp => new HttpClient
+//{
+//    BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!)
+//});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseCors(policy=>policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -7,13 +7,16 @@ using Syncfusion.Blazor;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
-
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-#region new add by mafizul
-builder.Services.AddSyncfusionBlazor();
-builder.Services.AddHttpClient<IEmployeeService, EmployeeService>(client =>
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped(sp => new HttpClient
 {
-    client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
 });
+#region new add by Mafizul
+builder.Services.AddSyncfusionBlazor();
+//builder.Services.AddHttpClient<IEmployeeService, EmployeeService>(client =>
+//{
+//    client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+//});
 #endregion
 await builder.Build().RunAsync();

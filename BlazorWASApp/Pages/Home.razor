@@ -3,24 +3,43 @@
 @using BlazorWASApp.Services
 @using Syncfusion.Blazor.Grids
 
-<SfGrid DataSource="@Employees">
-    <GridColumns>
-        <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="Employee ID"></GridColumn>
-        <GridColumn Field=@nameof(Employee.FirstName) HeaderText="First Name"></GridColumn>
-        <GridColumn Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn>
-        <GridColumn Field=@nameof(Employee.Email) HeaderText="Email"></GridColumn>
-    </GridColumns>
-</SfGrid>
 
+@*   <SfSpinner @bind-Visible="SpinnerVisible" Type="@SpinnerType.Bootstrap5" Size="50" Label="Data loading">
+    </SfSpinner> *@
+@* <SfSpinner Visible="true" Type="@SpinnerType.Bootstrap5" Label="Data loading">
+    </SfSpinner>
+    )*@
+@if (Employees != null)
+{
+    <SfGrid DataSource="@Employees" AllowPaging="true">
+        <GridPageSettings PageSize="10" PageCount="5" PageSizes="@pagerDropdown">
+        </GridPageSettings>
+        <GridColumns>
+            <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="Employee ID"></GridColumn>
+            <GridColumn Field=@nameof(Employee.FirstName) HeaderText="First Name"></GridColumn>
+            <GridColumn Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn>
+            <GridColumn Field=@nameof(Employee.Email) HeaderText="Email"></GridColumn>
+        </GridColumns>
+    </SfGrid>
+}
+@* <style>
+.e-spinner-pane .e-spinner-inner .e-spin-bootstrap5 {
+    stroke: red;
+}
+</style> *@
 @code {
+    string[] pagerDropdown = new string[] { "All", "5", "10", "15", "20" };
     public List<Employee> Employees { get; set; }
-
+    // public bool SpinnerVisible { get; set; }
     [Inject]
     public IEmployeeService EmployeeService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        // SpinnerVisible = true;
+        // await Task.Delay(3000);
         Employees = (await EmployeeService.GetEmployees()).ToList();
+        //SpinnerVisible = false;
     }
     // private List<Employee> LoadData()
     // {
