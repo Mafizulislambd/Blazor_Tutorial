@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWebApi", "BlazorWebAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorClassLibrary.shared", "BlazorClassLibrary.shared\BlazorClassLibrary.shared.csproj", "{138A5A0D-6D9C-4AAB-8EA4-040C57B1295B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreSimpleCrud", "CoreSimpleCrud\CoreSimpleCrud.csproj", "{890AAA65-3AD9-4411-83F6-01D3227EA9CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{138A5A0D-6D9C-4AAB-8EA4-040C57B1295B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{138A5A0D-6D9C-4AAB-8EA4-040C57B1295B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{138A5A0D-6D9C-4AAB-8EA4-040C57B1295B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{890AAA65-3AD9-4411-83F6-01D3227EA9CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{890AAA65-3AD9-4411-83F6-01D3227EA9CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{890AAA65-3AD9-4411-83F6-01D3227EA9CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{890AAA65-3AD9-4411-83F6-01D3227EA9CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
