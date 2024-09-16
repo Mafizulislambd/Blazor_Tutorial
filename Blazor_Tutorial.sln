@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWASApp", "BlazorWASApp\BlazorWASApp.csproj", "{8E071521-DF6F-4B07-8736-4FC382556430}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E071521-DF6F-4B07-8736-4FC382556430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E071521-DF6F-4B07-8736-4FC382556430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E071521-DF6F-4B07-8736-4FC382556430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E071521-DF6F-4B07-8736-4FC382556430}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F2FA0D7A-BD4C-458D-8498-B2FC2D57C755}
+	EndGlobalSection
+EndGlobal
