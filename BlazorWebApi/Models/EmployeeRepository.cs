@@ -58,11 +58,13 @@ namespace BlazorWebApi.Models
         //{
         //    return await appDbContext.Employees.ToListAsync();
         //}
-        public async Task<IEnumerable<EmployeeDataResult>> GetEmployees(int skip = 0, int take = 5, string orderBy= "EmployeeId")
+        public async Task<EmployeeDataResult> GetEmployees(int skip = 0, int take = 5, string orderBy= "EmployeeId")
         {
             EmployeeDataResult result = new EmployeeDataResult()
             {
-                Employees = appDbContext.Employees.OrderBy(orderBy).Skip(skip).Take(take),
+                Employees = appDbContext.Employees.OrderBy(comparer => comparer.EmployeeId)
+                .Skip(skip).
+                Take(take),
                 Count = await appDbContext.Employees.CountAsync()
             };
 
