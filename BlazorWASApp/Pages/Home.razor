@@ -4,100 +4,51 @@
 @using Syncfusion.Blazor.Grids
 @using Syncfusion.Blazor.Data
 
-@*   <SfSpinner @bind-Visible="SpinnerVisible" Type="@SpinnerType.Bootstrap5" Size="50" Label="Data loading">
-    </SfSpinner> *@
-@* <SfSpinner Visible="true" Type="@SpinnerType.Bootstrap5" Label="Data loading">
-    </SfSpinner>
-    )*@
-@if (Employees != null)
+@{
+    var intialGrouping = (new string[] { "Gender", "FirstName" });
+}
+@if (Employees == null)
 {
-    <SfGrid TValue="Employee" AllowPaging="true" AllowSorting="true">
-        <GridSortSettings>
-            <GridSortColumns>
-                <GridSortColumn Field="EmployeeId" Direction="SortDirection.Descending">
-                </GridSortColumn>
-            </GridSortColumns>
-        </GridSortSettings>
-        <SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(EmployeeAdaptor)"></SfDataManager>
-        <GridPageSettings PageSize="5"  PageCount="3" PageSizes="@pagerDropdown"></GridPageSettings>
+    <h3>Loading Data...</h3>
+}
+else
+{
+    <h3>All Employees</h3>
+ 
+    <SfGrid DataSource="@Employees" AllowGrouping="true">
+        <GridGroupSettings Columns="@intialGrouping" ShowGroupedColumn="true" ShowUngroupButton="true" ShowToggleButton="true" ShowDropArea="false">
+            <CaptionTemplate>
+                @{
+                    var employee = (context as CaptionTemplateContext);
+                    <div>@employee.Field : @employee.Key - @employee.Count Employees</div>
+                }
+            </CaptionTemplate>
+        </GridGroupSettings>
+       @*  <GridGroupSettings>
+            <CaptionTemplate>
+                @{
+                    var employee = (context as CaptionTemplateContext);
+                    <div>@employee.Field : @employee.Key - @employee.Count Employees</div>
+                }
+            </CaptionTemplate>
+        </GridGroupSettings> *@
         <GridColumns>
-            <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="Employee ID"></GridColumn>
+            <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="ID"></GridColumn>
             <GridColumn Field=@nameof(Employee.FirstName) HeaderText="First Name"></GridColumn>
-            <GridColumn Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn>
-            <GridColumn Field=@nameof(Employee.Email) HeaderText="Email"></GridColumn>
+            <GridColumn AllowGrouping="false" Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn>
+            <GridColumn Field=@nameof(Employee.Gender) HeaderText="Gender"></GridColumn>
         </GridColumns>
     </SfGrid>
 }
-@* <style>
-.e-spinner-pane .e-spinner-inner .e-spin-bootstrap5 {
-    stroke: red;
-}
-</style> *@
+
 @code {
-    string[] pagerDropdown { get; set; } = new string[] { "All", "5", "10", "15", "20" };
-    public Employee Employees { get; set; }
-    // public bool SpinnerVisible { get; set; }
+    public List<Employee> Employees { get; set; }
+
     [Inject]
     public IEmployeeService EmployeeService { get; set; }
-    public EmployeeAdaptor empService{ get; set; }
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     // SpinnerVisible = true;
-    //     // await Task.Delay(3000);
-    //     Employees = (await empService.ReadAsync(DataManagerRequest dataManagerRequest, string key = null);
-    //     //SpinnerVisible = false;
-    // }
-    // private List<Employee> LoadData()
-    // {
-    //     Employee e1 = new Employee
-    //         {
-    //             EmployeeId = 1,
-    //             FirstName = "John",
-    //             LastName = "Hastings",
-    //             Email = "john@pragimtech.com",
-    //             DateOfBrith = new DateTime(1980, 10, 5),
-    //             Gender = Gender.Male,
-    //             Department = new Department { DepartmentId = 1, DepartmentName = "IT" },
-    //             PhotoPath = "images/john.png"
-    //         };
-
-    //     Employee e2 = new Employee
-    //         {
-    //             EmployeeId = 2,
-    //             FirstName = "Sam",
-    //             LastName = "Galloway",
-    //             Email = "sam@pragimtech.com",
-    //             DateOfBrith = new DateTime(1981, 12, 22),
-    //             Gender = Gender.Male,
-    //             Department = new Department { DepartmentId = 2, DepartmentName = "HR" },
-    //             PhotoPath = "images/sam.jpg"
-    //         };
-
-    //     Employee e3 = new Employee
-    //         {
-    //             EmployeeId = 3,
-    //             FirstName = "Mary",
-    //             LastName = "Smith",
-    //             Email = "mary@pragimtech.com",
-    //             DateOfBrith = new DateTime(1979, 11, 11),
-    //             Gender = Gender.Female,
-    //             Department = new Department { DepartmentId = 1, DepartmentName = "IT" },
-    //             PhotoPath = "images/mary.png"
-    //         };
-
-    //     Employee e4 = new Employee
-    //         {
-    //             EmployeeId = 3,
-    //             FirstName = "Sara",
-    //             LastName = "Longway",
-    //             Email = "sara@pragimtech.com",
-    //             DateOfBrith = new DateTime(1982, 9, 23),
-    //             Gender = Gender.Female,
-    //             Department = new Department { DepartmentId = 3, DepartmentName = "Payroll" },
-    //             PhotoPath = "images/sara.png"
-    //         };
-
-    //     return new List<Employee> { e1, e2, e3, e4 };
-    // }
+    protected override async Task OnInitializedAsync()
+    {
+        Employees = (await EmployeeService.GetAllEmployees()).ToList();
+    }
 }

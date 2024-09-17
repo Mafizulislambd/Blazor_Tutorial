@@ -41,25 +41,12 @@ namespace BlazorProject.Server.Controllers
             }
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult> GetEmployees()
-        //{
-        //    try
-        //    {
-        //        return Ok(await employeeRepository.GetEmployees());
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError,
-        //            "Error retrieving data from the database");
-        //    }
-        //}
         [HttpGet]
-        public async Task<ActionResult> GetEmployees(int skip = 0, int take = 5,string orderBy="EmployeeId")
+        public async Task<ActionResult> GetAllEmployees()
         {
             try
             {
-                return Ok(await employeeRepository.GetEmployees(skip, take,orderBy));
+                return Ok(await employeeRepository.GetEmployees());
             }
             catch (Exception)
             {
@@ -67,6 +54,19 @@ namespace BlazorProject.Server.Controllers
                     "Error retrieving data from the database");
             }
         }
+       // [HttpGet]
+        //public async Task<ActionResult> GetEmployees(int skip = 0, int take = 5,string orderBy="EmployeeId")
+        //{
+        //    try
+        //    {
+        //        return Ok(await employeeRepository.GetEmployees(skip, take,orderBy));
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError,
+        //            "Error retrieving data from the database");
+        //    }
+        //}
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
