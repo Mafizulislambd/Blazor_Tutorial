@@ -15,7 +15,7 @@ else
 {
     <h3>All Employees</h3>
  
-    <SfGrid DataSource="@Employees" AllowGrouping="true">
+    <SfGrid DataSource="@Employees" AllowGrouping="true" AllowFiltering="true">
         <GridGroupSettings Columns="@intialGrouping" ShowGroupedColumn="true" ShowUngroupButton="true" ShowToggleButton="true" ShowDropArea="false">
             <CaptionTemplate>
                 @{
