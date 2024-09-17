@@ -41,12 +41,25 @@ namespace BlazorProject.Server.Controllers
             }
         }
 
+        //[HttpGet]
+        //public async Task<ActionResult> GetEmployees()
+        //{
+        //    try
+        //    {
+        //        return Ok(await employeeRepository.GetEmployees());
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError,
+        //            "Error retrieving data from the database");
+        //    }
+        //}
         [HttpGet]
-        public async Task<ActionResult> GetEmployees()
+        public async Task<ActionResult> GetEmployees(int skip = 0, int take = 5)
         {
             try
             {
-                return Ok(await employeeRepository.GetEmployees());
+                return Ok(await employeeRepository.GetEmployees(skip, take));
             }
             catch (Exception)
             {
@@ -54,7 +67,6 @@ namespace BlazorProject.Server.Controllers
                     "Error retrieving data from the database");
             }
         }
-
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
@@ -86,7 +98,7 @@ namespace BlazorProject.Server.Controllers
 
                 var emp = await employeeRepository.GetEmployeeByEmail(employee.Email);
 
-                if(emp != null)
+                if (emp != null)
                 {
                     ModelState.AddModelError("Email", "Employee email already in use");
                     return BadRequest(ModelState);

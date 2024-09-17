@@ -13,6 +13,7 @@ builder.Services.AddScoped(sp => new HttpClient
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
 });
 #region new add by Mafizul
+builder.Services.AddScoped<EmployeeAdaptor>();
 builder.Services.AddSyncfusionBlazor();
 //builder.Services.AddHttpClient<IEmployeeService, EmployeeService>(client =>
 //{

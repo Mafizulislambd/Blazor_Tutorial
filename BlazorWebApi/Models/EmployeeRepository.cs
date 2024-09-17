@@ -54,11 +54,20 @@ namespace BlazorWebApi.Models
                 .FirstOrDefaultAsync(e => e.Email == email);
         }
 
-        public async Task<IEnumerable<Employee>> GetEmployees()
+        //public async Task<IEnumerable<Employee>> GetEmployees()
+        //{
+        //    return await appDbContext.Employees.ToListAsync();
+        //}
+        public async Task<IEnumerable<EmployeeDataResult>> GetEmployees(int skip = 0, int take = 5, string orderBy= "EmployeeId")
         {
-            return await appDbContext.Employees.ToListAsync();
-        }
+            EmployeeDataResult result = new EmployeeDataResult()
+            {
+                Employees = appDbContext.Employees.OrderBy(orderBy).Skip(skip).Take(take),
+                Count = await appDbContext.Employees.CountAsync()
+            };
 
+            return result;
+        }
         public async Task<IEnumerable<Employee>> Search(string name, Gender? gender)
         {
             IQueryable<Employee> query = appDbContext.Employees;

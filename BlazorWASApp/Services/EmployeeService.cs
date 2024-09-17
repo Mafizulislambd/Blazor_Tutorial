@@ -11,11 +11,14 @@ namespace BlazorWASApp.Services
         {
             this.httpClient = httpClient;
         }
-        public async Task<IEnumerable<Employee>> GetEmployees()
+        //public async Task<IEnumerable<Employee>> GetEmployees()
+        //{
+        //    return await httpClient.GetFromJsonAsync<IEnumerable<Employee>>("https://localhost:7282/api/Employees");
+        //}
+        public async Task<EmployeeDataResult> GetEmployees(int skip, int take)
         {
-            return await httpClient.GetFromJsonAsync<IEnumerable<Employee>>("https://localhost:7282/api/Employees");
+            return await httpClient.GetFromJsonAsync<EmployeeDataResult>($"https://localhost:7282/api/employees?skip={skip}&take={take}");
         }
-
         public Task<Employee> AddEmployee(Employee employee)
         {
             throw new NotImplementedException();

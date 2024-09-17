@@ -2,7 +2,7 @@
 @using BlazorClassLibrary.shared.Models
 @using BlazorWASApp.Services
 @using Syncfusion.Blazor.Grids
-
+@using Syncfusion.Blazor.Data
 
 @*   <SfSpinner @bind-Visible="SpinnerVisible" Type="@SpinnerType.Bootstrap5" Size="50" Label="Data loading">
     </SfSpinner> *@
@@ -11,9 +11,15 @@
     )*@
 @if (Employees != null)
 {
-    <SfGrid DataSource="@Employees" AllowPaging="true">
-        <GridPageSettings PageSize="10" PageCount="5" PageSizes="@pagerDropdown">
-        </GridPageSettings>
+    <SfGrid TValue="Employee" AllowPaging="true" AllowSorting="true">
+        <GridSortSettings>
+            <GridSortColumns>
+                <GridSortColumn Field="EmployeeId" Direction="SortDirection.Descending">
+                </GridSortColumn>
+            </GridSortColumns>
+        </GridSortSettings>
+        <SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(EmployeeAdaptor)"></SfDataManager>
+        <GridPageSettings PageSize="5"  PageCount="3" PageSizes="@pagerDropdown"></GridPageSettings>
         <GridColumns>
             <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="Employee ID"></GridColumn>
             <GridColumn Field=@nameof(Employee.FirstName) HeaderText="First Name"></GridColumn>
@@ -28,19 +34,20 @@
 }
 </style> *@
 @code {
-    string[] pagerDropdown = new string[] { "All", "5", "10", "15", "20" };
-    public List<Employee> Employees { get; set; }
+    string[] pagerDropdown { get; set; } = new string[] { "All", "5", "10", "15", "20" };
+    public Employee Employees { get; set; }
     // public bool SpinnerVisible { get; set; }
     [Inject]
     public IEmployeeService EmployeeService { get; set; }
+    public EmployeeAdaptor empService{ get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-        // SpinnerVisible = true;
-        // await Task.Delay(3000);
-        Employees = (await EmployeeService.GetEmployees()).ToList();
-        //SpinnerVisible = false;
-    }
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     // SpinnerVisible = true;
+    //     // await Task.Delay(3000);
+    //     Employees = (await empService.ReadAsync(DataManagerRequest dataManagerRequest, string key = null);
+    //     //SpinnerVisible = false;
+    // }
     // private List<Employee> LoadData()
     // {
     //     Employee e1 = new Employee
