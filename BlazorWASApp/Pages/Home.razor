@@ -12,20 +12,25 @@
     <h3>Loading Data...</h3>
 }
 else
-{
+{<div style="width:700px">
     <h3>All Employees</h3>
  
-    <SfGrid DataSource="@Employees" AllowGrouping="true" AllowFiltering="true">
+    <SfGrid DataSource="@Employees"  AllowFiltering="true">
         <GridFilterSettings Mode="FilterBarMode.Immediate" ImmediateModeDelay="200">
+          @*   <GridFilterColumns>
+                <GridFilterColumn Field="EmployeeId" Operator="Operator.LessThanOrEqual" Value="10"></GridFilterColumn>
+                <GridFilterColumn Field="FirstName" Operator="Operator.Contains" Value="@fn"></GridFilterColumn>
+            </GridFilterColumns> *@
         </GridFilterSettings>
-        <GridGroupSettings Columns="@intialGrouping" ShowGroupedColumn="true" ShowUngroupButton="true" ShowToggleButton="true" ShowDropArea="false">
-          @*   <CaptionTemplate>
+       
+    @*     <GridGroupSettings Columns="@intialGrouping" ShowGroupedColumn="true" ShowUngroupButton="true" ShowToggleButton="true" ShowDropArea="false">
+            <CaptionTemplate>
                 @{
                     var employee = (context as CaptionTemplateContext);
                     <div>@employee.Field : @employee.Key - @employee.Count Employees</div>
                 }
-            </CaptionTemplate> *@
-        </GridGroupSettings>
+            </CaptionTemplate>
+        </GridGroupSettings> *@
 
        @*  <GridGroupSettings>
             <CaptionTemplate>
@@ -36,17 +41,18 @@ else
             </CaptionTemplate>
         </GridGroupSettings> *@
         <GridColumns>
-            <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="ID"></GridColumn>
+                <GridColumn Field=@nameof(Employee.EmployeeId) HeaderText="ID" FilterSettings="@(new FilterSettings() { Operator = Operator.LessThanOrEqual })"></GridColumn>
             <GridColumn AllowFiltering="false" Field=@nameof(Employee.FirstName) HeaderText="First Name"></GridColumn>
-            <GridColumn AllowGrouping="false" Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn>
+            <GridColumn Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn>
             <GridColumn Field=@nameof(Employee.Gender) HeaderText="Gender"></GridColumn>
         </GridColumns>
     </SfGrid>
+    </div>
 }
 
 @code {
     public List<Employee> Employees { get; set; }
-
+    string fn = "fn";
     [Inject]
     public IEmployeeService EmployeeService { get; set; }
 
