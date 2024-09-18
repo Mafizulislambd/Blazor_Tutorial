@@ -5,6 +5,7 @@
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.Navigations
 @using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.DropDowns
 <div style="width:750px">
     <SfGrid DataSource="@Employees" AllowPaging="true"
             Toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel" })">
@@ -18,18 +19,33 @@
             <GridColumn Field=@nameof(Employee.LastName) HeaderText=" Last Name"></GridColumn>
             <GridColumn Field=@nameof(Employee.DateOfBrith) Format="d"
                         HeaderText="Date of Birth"></GridColumn>
-            <GridColumn Field=@nameof(Employee.Department.DepartmentName) HeaderText="Department" Width="140px">
+            <GridColumn Field=@nameof(Employee.Department) HeaderText="Department" Width="140px">
+             <EditTemplate>
+                    <SfDropDownList TItem="Department" TValue="int" DataSource="@Departments"
+                                    @bind-Value="@((context as Employee).DepartmentId)" >
+                        <DropDownListFieldSettings Text="DepartmentName" Value="DepartmentId">
+                        </DropDownListFieldSettings>
+                    </SfDropDownList>
+                </EditTemplate>
             </GridColumn>
-            <GridColumn Field=@nameof(Employee.Gender) HeaderText="Gender"
-                        Width="140px"></GridColumn>
+            <GridColumn Field=@nameof(Employee.Gender) HeaderText="Gender" Width="140px">
+                <EditTemplate>
+                    <SfDropDownList ID="Gender" TItem="string" TValue="Gender"
+                                    @bind-Value="@((context as Employee).Gender)"
+                                    DataSource="@GenderEnumValues">
+                    </SfDropDownList>
+                </EditTemplate>
+            </GridColumn>
             <GridColumn Field=@nameof(Employee.Email) HeaderText="Email"></GridColumn>
         </GridColumns>
     </SfGrid>
 </div>
 @code {
-
+    public string[] GenderEnumValues = Enum.GetNames(typeof(Gender));
      public List<Employee> Employees { get; set; }
+    public List<Department> Departments { get; set; }
 
+    public IDepartmentService DepartmentService { get; set; }
     [Inject]
     public IEmployeeService EmployeeService { get; set; }
 

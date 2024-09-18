@@ -19,5 +19,9 @@ builder.Services.AddSyncfusionBlazor();
 //{
 //    client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
 //});
+builder.Services.AddHttpClient<IDepartmentService, DepartmentService>(client =>
+{
+    client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+});
 #endregion
 await builder.Build().RunAsync();
